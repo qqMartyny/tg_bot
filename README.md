@@ -1,4 +1,4 @@
 # exchange-rates-bot
-Пример реализации простого Telegram-бота на Java с использованием Spring Boot.
+Это бот тг-бот, реализованный на Java Spring и собранный на Gradle.
+Бот позволяет смотреть актуальную информацию о стоимости доллара США и евро к рублю.
 
-Данный пример подробно разобран в статье: http://akutepov.ru/ru/blog/prostoi-telegram-bot-na-java-i-spring-boot/
