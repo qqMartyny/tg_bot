@@ -17,8 +17,10 @@ import java.time.LocalDate;
 @Component
 public class ExchangeRatesBot extends TelegramLongPollingBot {
 
+//    Создание логгера для отправления отчетности о проблемах
     private static final Logger LOG = LoggerFactory.getLogger(ExchangeRatesBot.class);
 
+//    Команды
     private static final String START = "/start";
     private static final String USD = "/usd";
     private static final String EUR = "/eur";
@@ -31,6 +33,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         super(botToken);
     }
 
+//    Обработка команд пользователя
     @Override
     public void onUpdateReceived(Update update) {
         if (!update.hasMessage() || !update.getMessage().hasText()) {
@@ -55,6 +58,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         return "Ilyanin_Bot";
     }
 
+//    Команда для старта общения с ботом
     private void startCommand(Long chatId, String userName) {
         var text = """
                 Добро пожаловать в бот, %s!
@@ -72,6 +76,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         sendMessage(chatId, formattedText);
     }
 
+//    Команда вывода курса доллара
     private void usdCommand(Long chatId) {
         String formattedText;
         try {
@@ -85,6 +90,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         sendMessage(chatId, formattedText);
     }
 
+//    Команда вывода курса евро
     private void eurCommand(Long chatId) {
         String formattedText;
         try {
@@ -98,6 +104,7 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         sendMessage(chatId, formattedText);
     }
 
+//    Команда помощи
     private void helpCommand(Long chatId) {
         var text = """
                 Справочная информация по боту
@@ -109,11 +116,13 @@ public class ExchangeRatesBot extends TelegramLongPollingBot {
         sendMessage(chatId, text);
     }
 
+//    Обработка случаю, когда пользователь воодит что-то непонятно
     private void unknownCommand(Long chatId) {
         var text = "Не удалось распознать команду!";
         sendMessage(chatId, text);
     }
 
+//    Отправка сообщения пользователю
     private void sendMessage(Long chatId, String text) {
         var chatIdStr = String.valueOf(chatId);
         var sendMessage = new SendMessage(chatIdStr, text);

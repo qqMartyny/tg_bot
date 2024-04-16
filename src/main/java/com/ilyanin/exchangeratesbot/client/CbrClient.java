@@ -10,6 +10,7 @@ import com.ilyanin.exchangeratesbot.exception.ServiceException;
 
 import java.io.IOException;
 import java.util.Optional;
+import java.util.logging.XMLFormatter;
 
 @Component
 public class CbrClient {
@@ -20,11 +21,13 @@ public class CbrClient {
     @Value("${cbr.currency.rates.xml.url}")
     private String cbrCurrencyRatesXmlUrl;
 
+//    Получение XML с актуальным курсом
     public Optional<String> getCurrencyRatesXML() throws ServiceException {
         var request = new Request.Builder()
                 .url(cbrCurrencyRatesXmlUrl)
                 .build();
 
+//        Проверка читаемости XML
         try (var response = client.newCall(request).execute()) {
             var body = response.body();
             return body == null ? Optional.empty() : Optional.of(body.string());

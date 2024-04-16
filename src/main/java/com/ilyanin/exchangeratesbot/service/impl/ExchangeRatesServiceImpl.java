@@ -22,12 +22,14 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
 
     private static final Logger LOG = LoggerFactory.getLogger(ExchangeRatesServiceImpl.class);
 
+//    Пути для данных доллара и евро в XML
     private static final String USD_XPATH = "/ValCurs//Valute[@ID='R01235']/Value";
     private static final String EUR_XPATH = "/ValCurs//Valute[@ID='R01239']/Value";
 
     @Autowired
     private CbrClient client;
 
+//    Получениие курса доллара
     @Cacheable(value = "usd", unless = "#result == null or #result.isEmpty()")
     @Override
     public String getUSDExchangeRate() throws ServiceException {
@@ -38,6 +40,7 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
         return extractCurrencyValueFromXML(xml, USD_XPATH);
     }
 
+//    Получение курса евро
     @Cacheable(value = "eur", unless = "#result == null or #result.isEmpty()")
     @Override
     public String getEURExchangeRate() throws ServiceException {
@@ -48,18 +51,21 @@ public class ExchangeRatesServiceImpl implements ExchangeRatesService {
         return extractCurrencyValueFromXML(xml, EUR_XPATH);
     }
 
+//    Очистка курса доллара в кэше
     @CacheEvict("usd")
     @Override
     public void clearUSDCache() {
         LOG.info("Cache \"usd\" cleared!");
     }
 
+//    Очистка курса евро в кэше
     @CacheEvict("eur")
     @Override
     public void clearEURCache() {
         LOG.info("Cache \"eur\" cleared!");
     }
 
+//    Извлечение из XML нужных данных
     private static String extractCurrencyValueFromXML(String xml, String xpathExpression)
             throws ServiceException {
         var source = new InputSource(new StringReader(xml));

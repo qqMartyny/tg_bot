@@ -20,6 +20,7 @@ public class ExchangeRatesBotConfiguration {
         return new OkHttpClient();
     }
 
+//    Регистрация бота в telegram api
     @Bean
     public TelegramBotsApi telegramBotsApi(ExchangeRatesBot exchangeRatesBot) throws TelegramApiException {
         var api = new TelegramBotsApi(DefaultBotSession.class);
